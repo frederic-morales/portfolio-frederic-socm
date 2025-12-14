@@ -1,19 +1,26 @@
-// src/app/layout.tsx
+import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // 1. Importamos la fuente
-import "./globals.css"; // 2. Importamos los estilos globales
-
-// 3. Importamos nuestros componentes de estructura
+import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@/hooks/use-theme";
+import { LanguageProvider } from "@/hooks/use-language";
 
-// Configuración de la fuente
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter", // Variable CSS para Tailwind
+  display: "swap",
+});
 
-// Metadatos para SEO (Título y descripción que sale en Google)
+const outfit = Outfit({ 
+  subsets: ["latin"],
+  variable: "--font-outfit", // Variable CSS para Tailwind
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Portfolio de Desarrollador | [Tu Nombre]",
-  description: "Portfolio profesional mostrando mis proyectos y habilidades en desarrollo web.",
+  title: "Mi Portfolio",
+  description: "Portfolio profesional",
 };
 
 export default function RootLayout({
@@ -22,21 +29,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${inter.className} bg-slate-900 min-h-screen flex flex-col`}>
-        
-        {/* El Navbar siempre arriba */}
-        <Navbar />
-        
-        {/* Aquí se renderiza el contenido de page.tsx, about/page.tsx, etc. */}
-        {/* flex-grow hace que el contenido ocupe el espacio disponible empujando el footer */}
-        <main className="flex-grow">
-          {children}
-        </main>
-
-        {/* El Footer siempre abajo */}
-        <Footer />
-        
+    <html lang="es" suppressHydrationWarning>
+      {/* 4. Agregamos las variables de fuente al body */}
+      <body className={`${inter.variable} ${outfit.variable} font-sans bg-background text-foreground antialiased min-h-screen flex flex-col`}>
+        <ThemeProvider>
+          <LanguageProvider>
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

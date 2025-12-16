@@ -52,6 +52,7 @@
     --border: 240 5% 18%;
     --input: 240 5% 18%;
     --ring: 160 84% 45%;
+
     /* Custom tokens dark */
     --gradient-hero: linear-gradient(135deg, hsl(160 84% 39% / 0.15), hsl(200 80% 50% / 0.1));
     --gradient-card: linear-gradient(145deg, hsl(240 10% 10%), hsl(240 10% 8%));
